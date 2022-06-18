@@ -1,9 +1,29 @@
-import React  from 'react'
+import React, { useState }  from 'react'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    let navigate = useNavigate()
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const auth = getAuth();
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken)
+            navigate('/')
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            console.log(errorMessage)
+        });
+    }
     return (
         <div>
-            <form>
+            <form onSubmit = {handleSubmit}>
             <h3>Sign In</h3>
             <div className="mb-3">
             <label>Email address</label>
@@ -11,6 +31,8 @@ const Login = () => {
                 type="email"
                 className="form-control"
                 placeholder="Enter email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
             </div>
             <div className="mb-3">
@@ -19,6 +41,8 @@ const Login = () => {
                 type="password"
                 className="form-control"
                 placeholder="Enter password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
             />
             </div>
             <div className="mb-3">

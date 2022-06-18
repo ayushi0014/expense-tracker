@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {SpeechProvider} from '@speechly/react-client'
+import "./firebaseConfig"
 
 import App from './App';
 import './index.css';

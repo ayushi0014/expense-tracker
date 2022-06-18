@@ -1,12 +1,26 @@
 //rafce
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from "@material-ui/core";
 import { PushToTalkButton, PushToTalkButtonContainer, ErrorPanel } from '@speechly/react-ui';
 import Details from './Details/Details'
 import Main from './Main/Main'
 import useStyles from './styles';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
+    let navigate = useNavigate()
+    useEffect(()=>{
+        let authToken = sessionStorage.getItem('Auth Token')
+
+        if (authToken) {
+            navigate('/')
+        }
+
+        if (!authToken) {
+            navigate('/login')
+        }
+    },[])
+
     const classes = useStyles();
     return (
         <div style ={{"background": "linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url(https://raw.githubusercontent.com/adrianhajdin/speechly_expense_tracker_project/main/src/assets/money.png)"}}>

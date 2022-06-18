@@ -9,6 +9,7 @@
     "@speechly/react-client": "0.0.20",
     "@speechly/react-ui": "^2.0.0-beta.8",
     "chart.js": "^3.3.0",
+    "firebase": "^9.8.3",
     "react": "^16.12.0",
     "react-chartjs-2": "^3.0.3",
     "react-dom": "^16.12.0",
