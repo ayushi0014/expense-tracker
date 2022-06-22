@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 const Signup = () => {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
+   const [error, setError] = useState('')
 
    let navigate = useNavigate()
 
@@ -20,6 +21,21 @@ const Signup = () => {
          const errorCode = error.code;
          const errorMessage = error.message;
          console.log(errorMessage)
+       
+         let bracketIndex=errorMessage.indexOf("(")
+         let authBracket=errorMessage.indexOf("/")
+         let lastbracketIndex=errorMessage.indexOf(")")
+         let authError=errorMessage.substring(authBracket+1,lastbracketIndex)
+ 
+         if(authError=="email-already-in-use")
+         {
+            setError("Eamil already in use")
+         }
+         else
+         {
+         let errorM=errorMessage.substring(9,bracketIndex)
+         setError(errorM)
+         }
       });
    }
 
@@ -53,7 +69,7 @@ const Signup = () => {
                   onChange={(e) => setEmail(e.target.value)}
                />
             </div>
-            <div className="mb-3 p-2">
+            <div className=" p-2">
                <label>Password</label>
                <input
                   type="password"
@@ -63,6 +79,7 @@ const Signup = () => {
                   onChange={(e) => setPassword(e.target.value)}
                />
             </div>
+            <div className='text-danger mb-3 px-2'>{error}</div>
             <div className="d-grid">
                <button type="submit" className="btn btn-primary">
                   Sign Up

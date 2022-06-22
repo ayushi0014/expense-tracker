@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
- 
+    const [error, setError] = useState('')
     let navigate = useNavigate()
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -21,7 +21,7 @@ const Login = () => {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-
+setError("Please enter valid credentials")
             console.log(errorMessage)
         });
     }
@@ -46,7 +46,7 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
             />
             </div>
-            <div className="mb-3 p-2">
+            <div className="mb-1 px-2 pt-1">
             <label>Password</label>
             <input
                 type="password"
@@ -56,7 +56,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
             />
             </div>
-            <div className="mb-3  px-2 pt-1 pb-1">
+            <div className=" mb-1 px-2 pt-1 pb-2">
             <div className="custom-control custom-checkbox">
                 <input
                 type="checkbox"
@@ -68,6 +68,7 @@ const Login = () => {
                 </label>
             </div>
             </div>
+            <div className='text-danger mb-3 px-2'>{error}</div>
             <div className="d-grid">
             <button type="submit" className="btn btn-primary">
                 Submit
