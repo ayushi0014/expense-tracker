@@ -7,7 +7,7 @@ import useStyles from './styles';
 const Details = ({ title }) => {
     const classes = useStyles();
     const { total, chartData } = useTransactions(title);//destructure ->customHook
-    console.log(chartData)
+    //console.log(chartData)
     return (
         <Card className={title === "Income" ? classes.income : classes.expense}>
             <CardHeader title={title} />

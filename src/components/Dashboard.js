@@ -25,7 +25,8 @@ const Dashboard = () => {
     },[authToken])
 let onclick=()=>
 {
-    sessionStorage.setItem('Auth Token', "")
+    sessionStorage.clear()
+    localStorage.clear()
     setAuthToken(!authToken)
   
 }

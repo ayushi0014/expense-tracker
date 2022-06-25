@@ -11,7 +11,7 @@ const useTransactions = (title) => {
     const total = selectedTypeTransactions.reduce((acc, curVal) => acc += curVal.amount, 0);//0 is initial value of acc
     const categories = title === 'Income' ? incomeCategories : expenseCategories;
 
-    console.log({ categories, total, selectedTypeTransactions })
+    //console.log({ categories, total, selectedTypeTransactions })
 
     selectedTypeTransactions.forEach((t) => {
         const category = categories.find((c) => c.type === t.category)

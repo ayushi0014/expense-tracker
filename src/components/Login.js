@@ -1,6 +1,8 @@
 import React, { useState }  from 'react'
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
 import { useNavigate } from 'react-router-dom'
+import { getDoc, doc  } from 'firebase/firestore'
+import { database } from '../firebaseConfig'
 
 
 
@@ -16,6 +18,11 @@ const Login = () => {
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             sessionStorage.setItem('Auth Token', userCredential._tokenResponse.refreshToken)
+            localStorage.setItem('UID', userCredential.user.uid)
+            getDoc(doc(database, "users", userCredential.user.uid)).then(res => {
+                //console.log(res.data())
+                localStorage.setItem('transactions', JSON.stringify(res.data().transactions))
+            })
             navigate('/')
         })
         .catch((error) => {
