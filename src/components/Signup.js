@@ -1,19 +1,73 @@
 import React, { useState } from 'react'
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
+import { ContactsOutlined } from '@material-ui/icons';
 
 
 const Signup = () => {
    const [email, setEmail] = useState('')
-   const [password, setPassword] = useState('')
-   const [error, setError] = useState('')
 
+  
+   const [error, setError] = useState('')
+   const [disabledParameter, setDisabledParameter] = useState(true)
+   const [passwordError, setPasswordError] = useState("")
+   const [state, setState] = React.useState({
+      firstName: "",
+      lastName:"",
+      email:"",
+      password:"",
+    })
    let navigate = useNavigate()
+
+
+   let namevalidator=(evt)=>
+   {
+      var validRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,5}$/;
+      
+      const value = evt.target.value;
+let input={     ...state, [evt.target.name]: value}
+let passwordRegex=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+
+
+
+if(input.password.length>0 &&!(input.password.match(passwordRegex)))
+{
+   setPasswordError("Password must contain at least six characters, at least one number and both lower and uppercase letters and special characters")
+}
+else{
+   setPasswordError("")
+}
+
+if(input.firstName==='' || input.lastName==='' ||  input.password==='' ||!(input.email.match(validRegex)) ||input.password.length<6
+ )
+{
+
+   setDisabledParameter(true)
+}
+
+else
+{
+
+  setDisabledParameter(false)
+}
+
+      setState({
+        ...state,
+        [evt.target.name]: value
+      });
+
+ 
+
+
+
+   }
+   
+ 
 
    const handleSubmit = (e) => {
       e.preventDefault()
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, state.email, state.password)
       .then((userCredential) => {
          navigate('/login')
       })
@@ -48,40 +102,57 @@ const Signup = () => {
             <div className='bg-white p-5   ' style={{width:'30rem',height:'40rem',borderRadius:'2rem'}}>
             <h3 className='p-2'>Sign Up</h3>
             <div className="mb-3 p-2">
-               <label>First name</label>
+               <label>First name<span className='text-danger px-1'>*</span></label>
                <input
                   type="text"
                   className="form-control"
                   placeholder="First name"
+                  value={state.firstName}
+                  name="firstName"
+                  required
+                  onChange={namevalidator}
                />
             </div>
             <div className="mb-3 p-2">
-               <label>Last name</label>
-               <input type="text" className="form-control" placeholder="Last name" />
+               <label>Last name<span className='text-danger px-1'>*</span></label>
+               <input type="text" className="form-control" placeholder="Last name" required
+               name="lastName"
+          value={state.lastName}
+                  onChange={namevalidator}/>
             </div>
             <div className="mb-3 p-2">
-               <label>Email address</label>
+               <label>Email address <span className='text-danger px-1'>*</span></label>
                <input
                   type="email"
                   className="form-control"
                   placeholder="Enter email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
+                  value={state.email}
+                  required
+                  onChange={namevalidator}
                />
             </div>
             <div className=" p-2">
-               <label>Password</label>
+               <label>Password <span className='text-danger px-1'>*</span></label>
                <input
                   type="password"
                   className="form-control"
                   placeholder="Enter password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
+                  value={state.password}
+                  required
+                  onChange={namevalidator}
                />
             </div>
+            
+            <div className='text-danger mb-3 px-2'>{passwordError}</div>
+     
+
+            
             <div className='text-danger mb-3 px-2'>{error}</div>
             <div className="d-grid">
-               <button type="submit" className="btn btn-primary">
+               
+               <button type="submit" disabled={disabledParameter}  className="btn btn-primary">
                   Sign Up
                </button>
             </div>

@@ -8,10 +8,11 @@ import Main from './Main/Main'
 import useStyles from './styles';
 import { useNavigate } from 'react-router-dom';
 
+
 const Dashboard = () => {
     let navigate = useNavigate()
     const [authToken, setAuthToken] = useState(false)
-   
+
     useEffect(()=>{
         let authToken = sessionStorage.getItem('Auth Token')
 
@@ -25,8 +26,7 @@ const Dashboard = () => {
     },[authToken])
 let onclick=()=>
 {
-    sessionStorage.clear()
-    localStorage.clear()
+    sessionStorage.setItem('Auth Token', "")
     setAuthToken(!authToken)
   
 }
