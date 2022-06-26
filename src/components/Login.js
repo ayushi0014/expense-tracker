@@ -63,18 +63,6 @@ setError("Please enter valid credentials")
                 onChange={(e) => setPassword(e.target.value)}
             />
             </div>
-            <div className=" mb-1 px-2 pt-1 pb-2">
-            <div className="custom-control custom-checkbox">
-                <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-                />
-                <label className="custom-control-label p-1" htmlFor="customCheck1">
-                Remember me
-                </label>
-            </div>
-            </div>
             <div className='text-danger mb-3 px-2'>{error}</div>
             <div className="d-grid">
             <button type="submit" className="btn btn-primary">
